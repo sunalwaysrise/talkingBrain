@@ -505,7 +505,7 @@ img {
   .deviceBox img {
     height: 180px;
     margin: 50px 0; }
-  .deviceBox a {
+  .deviceBox a,.deviceBox button {
     display: block;
     width: 150px;
     height: 50px;

@@ -10,7 +10,9 @@
 <link rel="stylesheet" href="https://www.wenbin.lu/Public/game_manage/res/css/application.min.css"/>
 <link rel="stylesheet" href="https://www.wenbin.lu/Public/game_manage/res/css/css.css"/>
 <style type="text/css">
-  .img-rounded{width:140px;height:140px;}
+  .img-rounded{width:140px!important;height:140px;}
+  .audio_warp{height:40px;padding:20px 0;}
+  .form-group .audio{display:block!important;height:30px!important;width:200px!important;margin:0 auto;}
 </style>
 </head>
 <body>
@@ -88,13 +90,15 @@
         max_interval:"",
         min_interval:"",
         interfere:[],
+        type:"1",
         delay:"",
-        odds:""
+        odds:"",
+        voice:""
       };
     }else{
       o.interfere=o.interfere.split(',');
     }
-    var i=0,len=o.interfere.length;
+    var i=0,len=o.interfere.length,class1='',class2='';
     h.push('<div class="col-md-12 game_step" id="step_'+K+'">');
         h.push('<div class="widget">');
           h.push('<header>');
@@ -105,79 +109,140 @@
           h.push('</header>');
           h.push('<div class="row"><div class="col-sm-12">');
             h.push('<div class="form-group row">');
-              h.push('<label class="col-sm-3 control-label">游戏时间</label>');
+              h.push('<label class="col-sm-3 control-label">阶段时间</label>');
               h.push('<div class="col-sm-3">');
                 h.push('<div class="input-group">');
                   h.push('<input class="form-control need_time" value="'+o.need_time+'" type="text"><span class="input-group-addon">分钟</span>');
                 h.push('</div>');
               h.push('</div>');
             h.push('</div>');
+
+
             h.push('<div class="form-group row">');
-              h.push('<label class="col-sm-3 control-label">干扰图片</label>');
-              h.push('<div class="col-md-9">');
-                h.push('<div class="well">');
-                  h.push('<div class="form-group">');
-                    h.push('<input type="file" class="form-control" id="files_'+K+'" data="'+K+'" multiple="" />');
+                h.push('<label class="col-sm-3 control-label">阶段类型</label>');
+                h.push('<div class="col-sm-3">');
+                  h.push('<div class="input-group form-control l_select">');
+                    h.push('<select class="select step_type" onchange="_changeType(this)">');
+                      if(o.type=="0"){
+                        class1='display:block';
+                        class2='display:none';
+                        h.push('<option value="1">游戏</option>');
+                        h.push('<option value="0" selected>休息</option>');
+                      }else{
+                        class1='display:none';
+                        class2='display:block';
+                        h.push('<option value="1" selected>游戏</option>');
+                        h.push('<option value="0">休息</option>');
+                      }
+                    h.push('</select>')
                   h.push('</div>');
-                  h.push('<div class="form-group">');
-                    h.push('<label>进度</label>');
-                    h.push('<div id="files_progress_'+K+'" ></div>');
+                h.push('</div>');
+            h.push('</div>');
+
+            h.push('<div class="L_step_rest" style="'+class1+'">');
+
+
+              h.push('<div class="form-group row">');
+                  h.push('<label class="col-sm-3 control-label">提示声音</label>');
+                  h.push('<div class="col-sm-3">');
+                    h.push('<div class="form-group">');
+                      h.push('<input type="file" class="form-control" onchange="btn_upload_voive('+K+')" id="file_voice_upload_'+K+'"  />');
+                      h.push('<input type="hidden" class="voice" id="file_voice_'+K+'"  value="'+o.voice+'" />');//最终上传
+                      h.push('<div class="audio_warp" id="voice_preview_'+K+'">');
+                      if(o.voice){
+                        h.push('<audio class="audio" controls src="'+PUBLIC+o.voice+'"></audio>');
+                      }
+                      h.push('</div>');
+                    h.push('</div>');
                   h.push('</div>');
-                  h.push('<a class="btn btn-default" onclick="submit('+K+')">上传</a>');
-                  h.push('<div class="form-group">');
-                    h.push('<label>预览</label><input class="interfere" type="hidden" id="L_image_'+K+'" value="'+o.interfere.join(',')+'"/>');
-                    h.push('<div class="well images_sort_box" id="files_show_'+K+'" >');
+              h.push('</div>');
 
-                    for (i;i<len;i++){
-                      h.push('<div class="images_sort"><img src="/Public/game_image/'+o.interfere[i]+'" class="img-rounded"><span onclick="remove_img(this)" class="glyphicon glyphicon-remove"></span></div>');
-                    }
 
-                    h.push('</div></div>');
-                  h.push('<div id="uploading_'+K+'"></div>');
+            h.push('</div>');
+
+
+            h.push('<div class="L_step_game" style="'+class2+'">');
+              h.push('<div class="form-group row">');
+                h.push('<label class="col-sm-3 control-label">干扰图片</label>');
+                h.push('<div class="col-md-9">');
+                  h.push('<div class="well">');
+                    h.push('<div class="form-group">');
+                      h.push('<input type="file" class="form-control" id="files_'+K+'" data="'+K+'" multiple="" />');
+                    h.push('</div>');
+                    h.push('<div class="form-group">');
+                      h.push('<label>进度</label>');
+                      h.push('<div id="files_progress_'+K+'" ></div>');
+                    h.push('</div>');
+                    h.push('<a class="btn btn-default" onclick="submit('+K+')">上传</a>');
+                    h.push('<div class="form-group">');
+                      h.push('<label>预览</label><input class="interfere" type="hidden" id="L_image_'+K+'" value="'+o.interfere.join(',')+'"/>');
+                      h.push('<div class="well images_sort_box" id="files_show_'+K+'" >');
+
+                      for (i;i<len;i++){
+                        h.push('<div class="images_sort"><img src="'+PUBLIC+o.interfere[i]+'" class="img-rounded"><span onclick="remove_img(this)" class="glyphicon glyphicon-remove"></span></div>');
+                      }
+
+                      h.push('</div></div>');
+                    h.push('<div id="uploading_'+K+'"></div>');
+                  h.push('</div>');
                 h.push('</div>');
               h.push('</div>');
-            h.push('</div>');
-            h.push('<div class="form-group row">');
-                h.push('<label class="col-sm-3 control-label">干扰项出现概率</label>');
+              h.push('<div class="form-group row">');
+                  h.push('<label class="col-sm-3 control-label">干扰项出现概率</label>');
+                  h.push('<div class="col-sm-2">');
+                    h.push('<div class="input-group">');
+                      h.push('<input class="form-control odds" value="'+o.odds+'" type="text">');
+                      h.push('<span class="input-group-addon">%</span>');
+                    h.push('</div>');
+                  h.push('</div>');
+              h.push('</div>');
+              h.push('<div class="form-group row">');
+                h.push('<label class="col-sm-3 control-label">出现元素的间隔时间</label>');
                 h.push('<div class="col-sm-2">');
                   h.push('<div class="input-group">');
-                    h.push('<input class="form-control odds" value="'+o.odds+'" type="text">');
-                    h.push('<span class="input-group-addon">%</span>');
+                    h.push('<input class="form-control min_interval" value="'+o.min_interval+'" type="text">');
+                    h.push('<span class="input-group-addon">秒</span>');
                   h.push('</div>');
                 h.push('</div>');
-            h.push('</div>');
-            h.push('<div class="form-group row">');
-              h.push('<label class="col-sm-3 control-label">出现元素的间隔时间</label>');
-              h.push('<div class="col-sm-2">');
-                h.push('<div class="input-group">');
-                  h.push('<input class="form-control min_interval" value="'+o.min_interval+'" type="text">');
-                  h.push('<span class="input-group-addon">秒</span>');
+                h.push('<div class="col-sm-1 text-align-center">至</div>');
+                h.push('<div class="col-sm-2">');
+                  h.push('<div class="input-group">');
+                    h.push('<input class="form-control max_interval" value="'+o.max_interval+'" type="text">');
+                    h.push('<span class="input-group-addon">秒</span>');
+                  h.push('</div>');
                 h.push('</div>');
               h.push('</div>');
-              h.push('<div class="col-sm-1 text-align-center">至</div>');
-              h.push('<div class="col-sm-2">');
-                h.push('<div class="input-group">');
-                  h.push('<input class="form-control max_interval" value="'+o.max_interval+'" type="text">');
-                  h.push('<span class="input-group-addon">秒</span>');
-                h.push('</div>');
-              h.push('</div>');
-            h.push('</div>');
-            h.push('<div class="form-group row">');
-              h.push('<label class="col-sm-3 control-label">目标对象停留时间</label>');
-              h.push('<div class="col-sm-2">');
-                h.push('<div class="input-group">');
-                  h.push('<input class="form-control delay" value="'+o.delay+'" type="text">');
-                  h.push('<span class="input-group-addon">秒</span>');
+              h.push('<div class="form-group row">');
+                h.push('<label class="col-sm-3 control-label">目标对象停留时间</label>');
+                h.push('<div class="col-sm-2">');
+                  h.push('<div class="input-group">');
+                    h.push('<input class="form-control delay" value="'+o.delay+'" type="text">');
+                    h.push('<span class="input-group-addon">秒</span>');
+                  h.push('</div>');
                 h.push('</div>');
               h.push('</div>');
             h.push('</div>');
+
+
+
           h.push('</div></div>');
         h.push('</div>');
       h.push('</div>');
       $('#STEP').append(h.join(''));
       document.getElementById('files_'+K).addEventListener("change", handleFiles, false);
+      // document.getElementById('file_voice_upload_'+K).addEventListener("change", handleFiles, false);
       K++;
       re_calc();
+  }
+  function _changeType(e){
+    var v=$(e).val();
+    if(v=="1"){
+      $(e).parent().parent().parent().next().hide();
+      $(e).parent().parent().parent().next().next().show();
+    }else{
+      $(e).parent().parent().parent().next().show();
+      $(e).parent().parent().parent().next().next().hide();
+    }
   }
   // insert();
   function re_calc(){
@@ -213,7 +278,41 @@
     };
     formData.append("file", file, file.name);
     xhr.send(formData);
-  } 
+  }
+
+  function btn_upload_voive(i){
+    $('#loadingToast').show();
+    var files=document.querySelector("#file_voice_upload_"+i).files;
+    if(files.length==0){
+      return alert('请选择文件');
+    }
+    var file=files[0];
+    if (file.type.indexOf("audio/mp3") == 0) {
+      if (file.size >= 10240000) {
+        return alert('您这个"'+ file.name +'"文件大小过大，应小于5M');  
+      }     
+    } else {
+      return alert('文件"' + file.name + '"不是mp3文件。');  
+    }
+    var xhr, formData;
+    xhr = new window.XMLHttpRequest();
+    formData = new window.FormData();
+    xhr.open('POST', '/index/game/upload_product_video');
+    xhr.onload = function () {
+      $('#loadingToast').hide();
+        var r=eval("("+xhr.responseText+")");
+        if(r.flag==1){
+          $('#file_voice_'+i).val(r.msg);
+          $('#voice_preview_'+i).html('<audio class="audio" controls src="'+PUBLIC+r.msg+'"></audio>');
+        }        
+    };
+    xhr.upload.onerror=function(e){
+      $('#loadingToast').hide();
+      alert(e);
+    }
+    formData.append("file", file, file.name);
+    xhr.send(formData);
+  }
 
 
   // add();
@@ -332,39 +431,48 @@
         odds:$(v).find('.odds').val(),
         min_interval:$(v).find('.min_interval').val(),
         max_interval:$(v).find('.max_interval').val(),
-        delay:$(v).find('.delay').val()
+        delay:$(v).find('.delay').val(),
+        type:$(v).find('.step_type').val(),
+        voice:$(v).find('.voice').val()
       }
       if(!o.need_time || isNaN(o.need_time)){
         stop=true;
-        return alert('第'+(i+1)+'阶段 游戏时间 错误');
+        return alert('第'+(i+1)+'阶段 时间 错误');
       }
-      if(!o.odds || isNaN(o.odds)){
-        stop=true;
-        return alert('第'+(i+1)+'阶段 游戏概率 错误');
-      }
-      if(!o.interfere){
-        stop=true;
-        return alert('请上传 第'+(i+1)+'阶段干扰图片');
-      }
-      if(!o.min_interval || isNaN(o.min_interval)){
-        stop=true;
-        return alert('第'+(i+1)+'阶段 间隔时间 错误');
-      }
-      if(!o.max_interval || isNaN(o.max_interval)){
-        stop=true;
-        return alert('第'+(i+1)+'阶段 间隔时间 错误');
-      }
-      if (parseFloat(o.min_interval) >= parseFloat(o.max_interval)) {
-        stop=true;
-        return alert('第'+(i+1)+'阶段 间隔时间 错误');
-      }
-      if(!o.delay || isNaN(o.delay)){
-        stop=true;
-        return alert('第'+(i+1)+'阶段 目标对象停留时间 错误');
-      }
-      if (parseFloat(o.delay) >= parseFloat(o.min_interval)) {
-        stop=true;
-        return alert('第'+(i+1)+'阶段 目标对象停留时间不能大于或等于 出现元素的间隔时间最小值');
+      if(o.type=="1"){
+        if(!o.odds || isNaN(o.odds)){
+          stop=true;
+          return alert('第'+(i+1)+'阶段 游戏概率 错误');
+        }
+        if(!o.interfere){
+          stop=true;
+          return alert('请上传 第'+(i+1)+'阶段干扰图片');
+        }
+        if(!o.min_interval || isNaN(o.min_interval)){
+          stop=true;
+          return alert('第'+(i+1)+'阶段 间隔时间 错误');
+        }
+        if(!o.max_interval || isNaN(o.max_interval)){
+          stop=true;
+          return alert('第'+(i+1)+'阶段 间隔时间 错误');
+        }
+        if (parseFloat(o.min_interval) >= parseFloat(o.max_interval)) {
+          stop=true;
+          return alert('第'+(i+1)+'阶段 间隔时间 错误');
+        }
+        if(!o.delay || isNaN(o.delay)){
+          stop=true;
+          return alert('第'+(i+1)+'阶段 目标对象停留时间 错误');
+        }
+        // if (parseFloat(o.delay) >= parseFloat(o.min_interval)) {
+        //   stop=true;
+        //   return alert('第'+(i+1)+'阶段 目标对象停留时间不能大于或等于 出现元素的间隔时间最小值');
+        // }
+      }else{
+        // if(!o.voice ){
+        //   stop=true;
+        //   return alert('第'+(i+1)+'阶段 声音文件');
+        // }
       }
       h.push(o);
     });
@@ -398,6 +506,7 @@
 
   $('#current_file_name').val('{$d.correct}');
   $('#current_preview').html('<div class="images_sort"><img src="'+PUBLIC+'{$d.correct}" class="img-rounded" /><span onclick="remove_img(this)" class="glyphicon glyphicon-remove"></span></div>');
+
   var d='{$d.content}';
   if(d){
     d=eval("("+d+")");

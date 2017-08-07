@@ -19,6 +19,14 @@ body, html{height:100%;}
 }
 .correct_tip{right:0;color:#F44336;}
 .incorrect_tip{left:0;color:#4CAF50;}
+.audio{display:none;}
+#count{width:264px;height:96px;position:fixed;right:10px;top:10px;line-height:96px;text-align:center;color:#fff;background:url(__PUBLIC__/game/count.png) 50% 50% no-repeat;background-size:100% auto;font-size:42px;display:none;}
+#rest_please{position:fixed;left:0;top:0;right:0;bottom:0;background:rgba(0,0,0,.75);z-index:111;color:#fff;text-align:center;display:-webkit-flex;align-items:center;justify-content:center;font-size:80px;}
+#rest_please.hide{display:none;}
+@media screen and (max-width: 768px){
+  #count{width:132px;height:48px;line-height:48px;font-size:21px;top:auto;bottom:20px;}
+  #rest_please{font-size:20px;}
+}
 
 {$css}
 
@@ -29,7 +37,6 @@ body, html{height:100%;}
 <link rel="stylesheet" href="__PUBLIC__/game/beta3/swiper/swiper.min.css">
 <script src="__PUBLIC__/game/beta3/angular/angular.min.js"></script>
 <script src="__PUBLIC__/game/beta3/angular/angular-ui-router.min.js"></script>
-<script type="text/javascript" src="__PUBLIC__/game/zepto.min.js"></script>
 </head>
 <body class="{{bodyClass}}">
 
@@ -46,14 +53,18 @@ body, html{height:100%;}
 <script src="__PUBLIC__/game/beta3/angular/app.js"></script>
 
 <script type="text/javascript" src="__PUBLIC__/game/hilo-standalone.min.js"></script>
-<script type="text/javascript" src="__PUBLIC__/game/app3.js?v=2017071903"></script>
+<script type="text/javascript" src="__PUBLIC__/game/app4.js?v=2017072808"></script>
 <script type="text/javascript">
 var Data='{$d.content}';
 if(Data){
   Data=eval("("+Data+")");
 }
-
-
+var i=0,PUBLIC="/Public/game_image/";
+for(i;i<Data.length;i++){
+  if(Data[i].type=="0"){
+    $('body').append('<audio class="audio" id="rest_music_'+i+'" controls src="'+PUBLIC+Data[i].voice+'"></audio>')
+  }
+}
 
 </script>
 </body>

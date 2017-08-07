@@ -87,7 +87,7 @@ class GameController extends Controller{
   */ 
   public function upload_product_image(){
     $config = array(
-      'maxSize'    =>    3145728,
+      'maxSize'    =>    1000000,
       'rootPath'   =>    './Public/',
       'savePath'   =>    '/game_image/',
       'saveName'   =>    time().mt_rand(),
@@ -101,6 +101,28 @@ class GameController extends Controller{
       $image = new \Think\Image();
       $image->open('./Public/game_image/'.$url);
       $image->thumb(500, 500,\Think\Image::IMAGE_THUMB_CENTER)->save('./Public/game_image/m'.$url);
+      $r['msg']=$url;
+      $r['flag']=1;
+    }else{
+      $r['flag']=0;
+      $r['msg']='上传失败';
+      $r['info']=$upload->getError();
+    }
+    $this->ajaxReturn($r);
+  }
+  public function upload_product_video(){
+    $config = array(
+      'maxSize'    =>    5120000,
+      'rootPath'   =>    './Public/',
+      'savePath'   =>    '/game_image/',
+      'saveName'   =>    time().mt_rand(),
+      'exts'       =>    array('jpg', 'gif', 'png', 'jpeg','mp3'),
+      'autoSub'    =>    false,
+    );
+    $upload = new \Think\Upload($config);
+    $info=$upload->upload();
+    if($info){
+      $url = $info['file']['savename'];
       $r['msg']=$url;
       $r['flag']=1;
     }else{
@@ -125,5 +147,14 @@ class GameController extends Controller{
       $r['msg']='修改失败';
     }
     $this->ajaxReturn($r);
+  }
+  public function savelog(){
+    $s['sex']=I('sex');
+    $s['age']=I('age');
+    $s['name']=I('name');
+    $s['log']=$_POST['log'];
+    $s['counts']=$_POST['count'];
+    $s['time']=time();
+    $tip=M('game_log')->add($s);
   }
 }

@@ -1,6 +1,63 @@
 var talkingBrain = angular.module('talkingBrain', ['ui.router']),
     BASE_INFO = {},
-    RES = "/Public/game/beta3/";
+    RES = "/Public/game/beta3/",
+    wsAdd='ws://127.0.0.1:9090',
+    socket=new WebSocket(wsAdd),
+    SOCKET_BOX={
+        _timeout:null,
+        isopen:false,
+        INIT:{},
+        _do:function (){
+            var end=true;
+            if(SOCKET_BOX.INIT.start){
+                SOCKET_BOX.INIT.count++;
+                if(SOCKET_BOX.INIT.count>6){
+                    console.log('可以开始了');
+                    location.hash="#!/game";
+                    // $('#loading_btn').removeClass('hide');
+                    // $('#un_loading_btn').addClass('hide');
+                    end = false;
+                }
+            }
+            if(end){
+              clearTimeout(SOCKET_BOX._timeout);
+              SOCKET_BOX._timeout=setTimeout(function(){
+                SOCKET_BOX._do();
+              },1000);
+            }
+        }
+    },
+    so={
+        send:function (message, callback){
+            this.waitForConnection(function(){
+                socket.send(message);  
+                if (typeof callback !== 'undefined') {  
+                    callback();  
+                }
+            },100);  
+        },
+        waitForConnection : function (callback, interval) {  
+            if (socket.readyState === 1) {  
+                callback();  
+            } else {  
+                var that = this;  
+                setTimeout(function () {  
+                    that.waitForConnection(callback, interval);  
+                }, interval); 
+            }
+        }
+    };
+socket.binaryType = "arraybuffer";
+socket.onerror =function(evt){
+  alert('无法链接设备，请确定打开本地应用程序后刷新页面');
+  socket=null;
+}
+socket.onclose=function(){
+  socket = null;
+  SOCKET_BOX.isopen  = false;
+  SOCKET_BOX.INIT  = {};
+  clearTimeout(SOCKET_BOX._timeout);
+}
 talkingBrain
     .config(function($stateProvider, $urlRouterProvider) {
         $urlRouterProvider.otherwise("/list");
@@ -85,6 +142,10 @@ talkingBrain
             BASE_INFO.sex = x;
             swiper.slideNext();
         }
+        $scope.select_name = function() {
+            BASE_INFO.name = $scope.name;
+            swiper.slideNext();
+        }
         $scope.save = function() {
             BASE_INFO.age = parseInt($scope.age);
             if (BASE_INFO.age > 0 && BASE_INFO.age < 18) {
@@ -96,17 +157,47 @@ talkingBrain
     }).controller('bring-device', function($scope, $rootScope, $location) {
         $rootScope.bodyClass = '';
         $scope.RES = RES;
-        //websocket。监听状态
-        $scope.loading = function() {
-            $location.path('loading');
+        $scope.loading=function(){
+          $location.path('loading');
         }
+
     }).controller('loading', function($scope, $rootScope, $location) {
         $rootScope.bodyClass = '';
         $scope.RES = RES;
-        $scope.game = function() {
-            $location.path('game');
+
+        if(socket){
+          //websocket。开启监听
+          socket.onopen=function(){
+            SOCKET_BOX.isopen = true;
+          }
+          // socket.send(JSON.stringify({ command: 16, arg:""}));
+          so.send(JSON.stringify({ command: 16, arg:""}));
+
+          socket.onmessage=function(e){
+            var o=eval("("+e.data+")");
+            if(o.channel_state.join('')=="1111"){
+              if(!SOCKET_BOX.INIT.start){
+                SOCKET_BOX.INIT.start=true;
+                SOCKET_BOX.INIT.count=0;
+              }
+            }else{
+              SOCKET_BOX.INIT={}
+            }
+            clearTimeout(SOCKET_BOX._timeout);
+            SOCKET_BOX._timeout=setTimeout(function(){
+              SOCKET_BOX._do();
+            },1000);
+          }
         }
 
+        $scope.game=function(){
+          if(SOCKET_BOX.INIT.start){
+            $location.path('game');
+          }else{
+            alert('设备未链接成功');
+            $location.path('list');
+          }
+        }
     }).controller('printing', function($scope, $rootScope, $location) {
         $rootScope.bodyClass = '';
         $scope.RES = RES;
@@ -151,6 +242,9 @@ talkingBrain
             }
         }
         app.init();
+        window.onresize = function() {
+          app.init();
+        }
 
     })
 

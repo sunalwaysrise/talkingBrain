@@ -75,3 +75,45 @@ body.ver,
 
 /*select 'mobile',count(*) from l_user group by 'mobile' having count(*)>1;*/
 
+
+#un_loading_btn{color:#a1bbff;}
+#loading_btn{}
+.hide{display:none!important;}
+
+
+
+.cutdown-start {
+  top: 50%;
+  left: 50%;
+  width: 50%;
+  height: 50%;
+  color: #fff;
+  text-align: center;
+  position: absolute;
+  display: none
+}
+.cutdownan-imation {
+  -webkit-animation: cutdownan-keyframes 1s infinite ease both;
+  -moz-animation: cutdownan-keyframes 1s infinite ease bot
+}
+
+@-webkit-keyframes cutdownan-keyframes {
+  0 {
+    opacity: 0;
+    -webkit-transform: scale(.3)
+  }
+
+  50% {
+    opacity: 1;
+    -webkit-transform: scale(1.05)
+  }
+
+  70% {
+    -webkit-transform: scale(.9)
+  }
+
+  to {
+    opacity: 0;
+    -webkit-transform: scale(6)
+  }
+}
