@@ -1,0 +1,41 @@
+<loading></loading>
+
+
+
+<myheader></myheader>
+
+
+
+<div class="mainBox">
+  <div class="swiper-container">
+      <div class="swiper-wrapper">
+          <div class="swiper-slide stop-swiping">
+            <div class="sexBox">
+              <h1>Selection of children's sex</h1>
+              <div class="sex">
+                <div class="item" ng-click="select_sex(1)">
+                  <img ng-src="{{RES}}images/boy.png" alt="">
+                  <p>Boy</p>
+                </div>
+                <div class="item" ng-click="select_sex(2)">
+                  <img ng-src="{{RES}}images/girl.png" alt="">
+                  <p>Girl</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="swiper-slide stop-swiping">
+            <div class="ageBox">
+              <h1>Enter the Age</h1>
+              <div class="age">
+                <form >
+                  <input type="text" maxlength="2" ng-model="age"  placeholder="">
+                  <a ng-click="save()">OK</a>
+                </form>
+              </div>
+            </div>
+          </div>
+      </div>
+      <div class="swiper-pagination"></div>       
+  </div>
+</div>

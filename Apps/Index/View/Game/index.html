@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans" ng-app="talkingBrain">
+<head>
+<title>GAME</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="user-scalable=no, initial-scale=1.0, minimum-scale=1, maximum-scale=1" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<style type="text/css">
+body, div, canvas{image-rendering: optimizeSpeed;-webkit-image-rendering: optimizeSpeed;-webkit-interpolation-mode: nearest-neighbor;}
+body{padding:0; margin:0; font-size:12px;}
+body, html{height:100%;}
+
+@-webkit-keyframes cutdownan-keyframes{
+  0% {display:none;margin-top:0;}
+  50% {margin-top:-10px;}
+  70% {margin-top:-20px;}
+  100% {margin-top:-40px;display:none;}
+}
+.correct_tip{right:0;color:#F44336;}
+.incorrect_tip{left:0;color:#4CAF50;}
+
+{$css}
+
+</style>
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/game/css.css?v=2017070702"/>
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/game/animate.min.css?v=2017070701">
+<link rel="stylesheet" href="__PUBLIC__/game/beta3/css/bundle.css">
+<link rel="stylesheet" href="__PUBLIC__/game/beta3/swiper/swiper.min.css">
+<script src="__PUBLIC__/game/beta3/angular/angular.min.js"></script>
+<script src="__PUBLIC__/game/beta3/angular/angular-ui-router.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/game/zepto.min.js"></script>
+</head>
+<body class="{{bodyClass}}">
+
+
+<div ui-view></div>
+
+
+<audio id="correct_music" src="__PUBLIC__/game/correct_music.m4a" preload></audio>
+<audio id="incorrect_music" src="__PUBLIC__/game/incorrect_music.m4a" preload></audio>
+
+
+<script type="text/javascript" src="__PUBLIC__/game/beta3/js/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/game/beta3/swiper/swiper.min.js"></script>
+<script src="__PUBLIC__/game/beta3/angular/app.js"></script>
+
+<script type="text/javascript" src="__PUBLIC__/game/hilo-standalone.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/game/app3.js?v=2017071903"></script>
+<script type="text/javascript">
+var Data='{$d.content}';
+if(Data){
+  Data=eval("("+Data+")");
+}
+
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,118 @@
+<!doctype html>
+<head>
+<title>GAME</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="user-scalable=no, initial-scale=1.0, minimum-scale=1, maximum-scale=1" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<style type="text/css">
+body, div, canvas{image-rendering: optimizeSpeed;-webkit-image-rendering: optimizeSpeed;-webkit-interpolation-mode: nearest-neighbor;}
+body{padding:0; margin:0; font-size:12px;}
+body, html{height:100%;}
+
+@-webkit-keyframes cutdownan-keyframes{
+  0% {display:none;margin-top:0;}
+  50% {margin-top:-10px;}
+  70% {margin-top:-20px;}
+  100% {margin-top:-40px;display:none;}
+}
+.correct_tip{right:0;color:#F44336;}
+.incorrect_tip{left:0;color:#4CAF50;}
+
+{$css}
+
+</style>
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/game/css.css?v=2017070702"/>
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/game/wave.css?v=2017070703"/>
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/game/animate.min.css?v=2017070701">
+<script type="text/javascript" src="__PUBLIC__/game/zepto.min.js"></script>
+</head>
+<body>
+<div id="outer" class="init">
+    <div id="middle">
+        <div id="container">
+          <div id="Stage0">
+            <div id="example" class="correct"></div>
+
+            <div class="waveBox">
+              <div class="wave">
+                  <div class="dot"></div>
+                  <div class="dot"></div>
+                  <div class="dot"></div>
+                  <div class="dot"></div>
+                  <div class="dot"></div>
+                  <div class="dot"></div>
+                  <div class="dot"></div>
+                  <div class="dot"></div>
+                  <div class="dot"></div>
+                  <div class="dot"></div>
+                  <div class="dot"></div>
+                  <div class="dot"></div>
+                  <div class="dot"></div>
+                  <div class="dot"></div>
+                  <div class="dot"></div>
+                  <div class="dot"></div>
+                  <div class="dot"></div>
+                  <div class="dot"></div>
+                  <div class="dot"></div>
+                  <div class="dot"></div>
+              </div>
+            </div>
+
+            <a class="btn animated infinite pulse " onclick="play.init();"></a>
+          </div>
+          <div id="Stage1"></div>
+          <div id="Stage2">
+            <div id="Stage2_1"></div>
+          </div>
+        </div>
+    </div>
+</div>
+<audio id="correct_music" src="__PUBLIC__/game/correct_music.m4a" preload></audio>
+<audio id="incorrect_music" src="__PUBLIC__/game/incorrect_music.m4a" preload></audio>
+
+<script type="text/javascript" src="__PUBLIC__/game/hilo-standalone.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/game/app2.js?v=2017070701"></script>
+<script type="text/javascript">
+app.init();
+play.step1.need_time={$d.step1_need_time}*60*1000;// 第一阶段的时间
+play.step1.correct='correct';// 正确的目标
+play.step1.interfere=[];
+<foreach  name="step1" item="v">
+play.step1.interfere.push('interfere{$key}');
+</foreach>
+//第一阶段 干扰项出现概率
+play.step1.interfere_odds={$d.step1_interfere_odds};
+
+//第一阶段 出现元素的间隔时间
+play.step1.max_interval={$d.step1_interval_max}*1000;
+play.step1.min_interval={$d.step1_interval_min}*1000;
+// play.step1.interval={$d.step1_interval}*1000;
+
+//第一阶段 目标对象停留时间
+play.step1.delay={$d.step1_delay}*1000;
+
+// 第二阶段的时间
+play.step2.need_time={$d.step2_need_time}*60*1000;
+
+// 正确的目标，和第一阶段一样
+play.step2.correct='correct';
+play.step2.interfere=[];
+<foreach  name="step2" item="v">
+    play.step2.interfere.push('interfere_{$key}');
+</foreach>
+
+//第二阶段 干扰项出现概率
+play.step2.interfere_odds={$d.step2_interfere_odds};
+
+//第二阶段 出现元素的间隔时间
+
+play.step2.max_interval={$d.step2_interval_max}*1000;
+play.step2.min_interval={$d.step2_interval_min}*1000;
+
+//第二阶段 目标对象停留时间
+play.step2.delay={$d.step2_delay}*1000;
+
+</script>
+</body>
+</html>

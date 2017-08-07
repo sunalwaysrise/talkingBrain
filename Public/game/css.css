@@ -1,0 +1,77 @@
+#outer{height:100%; overflow:hidden; position:relative; width:100%;}
+#outer[id]{display:table; position:static;}
+#middle{position:absolute; top:50%;} 
+#middle[id]{display:table-cell; vertical-align:middle; position:static;}
+#container{position:relative; width:2000px; height:1000px; top:-50%; margin:0 auto;}
+#msg{text-align:center; margin-top:50%;}
+#fps{position:absolute; top:0; left:0; color:#000;}
+#Stage0,
+#Stage1{position: absolute;left: 0px; top: 0px; opacity: 1; z-index: 0; transform-origin: 0px 0px 0px; transform: translate3d(0px, 0px, 0px) rotate3d(0, 0, 1, 0deg) scale3d(1, 1, 1); overflow: hidden;display:none;}
+#Stage0{display:block;}
+#Stage1 a{position:absolute;z-index:1000;width:80px;height:80px;transition:0.1s;-webkit-transition:0.1s;}
+.correct_true.clicked:after{position:absolute;right:0;bottom:0;content:"";width:10px;height:30px;border-right:6px #F44336 solid;border-bottom:6px #F44336 solid;transform:rotate(45deg);-webkit-transform:rotate(45deg);}
+.correct_false.clicked:before,
+.correct_false.clicked:after{position:absolute;right:0;bottom:10px;content:"";width:30px;height:6px;background:#4CAF50;}
+.correct_false.clicked:before{transform:rotate(45deg);-webkit-transform:rotate(45deg);}
+.correct_false.clicked:after{transform:rotate(-45deg);-webkit-transform:rotate(-45deg);}
+#Stage0 h1{text-align:center;color:#00897B;font-size:26px;line-height:1.5;font-weight:normal;margin:0;padding:0 15px;}
+
+#correct_music,#incorrect_music{display:none;}
+body.game{background:url(../game/beta2/bg.png) no-repeat 50% 50%!important;}
+#outer.init{background:url(../game/beta2/init_tool.png) no-repeat 50% 50%;}
+#Stage0{background:url(../game/beta2/ready.png) no-repeat 50% 50%;background-size:contain;}
+body,#outer{background-size:100% 100%;}
+body.ver,
+#outer.ver{background-size:auto 100%;}
+#Stage0 .btn{width:18%;height:18%;position:absolute;top:62%;left:41%;background:url(../game/beta2/go.png) 50% 50% no-repeat;background-size:100% auto;}
+#Stage0 #example{width:32%;height:32%;position:absolute;left:34%;top:27.78%;}
+/*#Stage1{background:url(../game/beta2/playground.png) 50% 50% no-repeat;background-size:100% auto;}*/
+#Stage1 img{position:absolute;border:none;z-index:1002;}
+#Stage1 img.incorrect_flash{opacity:.75;transform:scale(0.8);-webkit-transform:scale(0.8);}
+#Stage2{position:fixed;left:0;top:0;right:0;bottom:0;background:rgba(0,0,0,0.8);display:none;z-index:99;}
+#Stage2_1{background:url(../game/beta2/result.png) no-repeat 50% 50%;background-size:100% auto;position:absolute;left:50%;top:50%;transform: translate(-50%,-50%);-webkit-transform: translate(-50%,-50%);}
+#Stage2 .again{width:11.66%;height:11.66%;position:absolute;left:43.2%;top:63.15%;background:url(../game/beta2/again.png) 50% 50% no-repeat;background-size:100% auto;}
+#Stage2 h2,#Stage2 h5,#Stage2 h3,#Stage2 h4{position:absolute;width:100%;text-align:center;left:0;color:#6e8499;margin:0;padding:0;line-height:1;font-size:24px;font-weight:normal;}
+#Stage2 h2{top:34.81%;}
+#Stage2 h3{top:47.22%;}
+#Stage2 h4{top:52.68%;}
+#Stage2 h5{top:58.33%;}
+#Stage2 h2 b,#Stage2 h5 b,#Stage2 h3 b,#Stage2 h4 b{color:#ef7500;padding:0 10px;font-size:36px;}
+#Stage2 h2 b{font-size:80px;}
+#Stage2 p{margin:0;color:#00796B;font-size:20px;line-height:1.5;padding-bottom:10px;}
+
+
+/*@media screen and (max-width:320px){
+  html{font-size:32px;}
+}
+@media screen and (min-width:321px) and (max-width:375px){
+  html{font-size:37.5px}
+}
+@media screen and (min-width:376px) and (max-width:415px){
+  html{font-size:41.4px}
+}
+@media screen and (min-width:416px) and (max-width:640px){
+  html{font-size:64px}
+}
+@media screen and (min-width:641px) and (max-width:720px){
+  html{font-size:72px}
+
+}
+@media screen and (min-width:721px) and (max-width:750px){
+  html{font-size:75px}
+}
+@media screen and (min-width:751px){
+  #Stage2 h2,#Stage2 h5,#Stage2 h3,#Stage2 h4{font-size:24px;}
+  #Stage2 h2 b,#Stage2 h5 b,#Stage2 h3 b,#Stage2 h4 b{font-size:36px;}
+  #Stage2 h2 b{font-size:80px;}
+}
+*/
+
+#Stage2 h2,#Stage2 h5,#Stage2 h3,#Stage2 h4{font-size:100%;}
+#Stage2 h2 b,#Stage2 h5 b,#Stage2 h3 b,#Stage2 h4 b{font-size:150%;}
+#Stage2 h2 b{font-size:250%;}
+
+/*select *  from l_user where mobile LIKE "%0922";*/
+
+/*select 'mobile',count(*) from l_user group by 'mobile' having count(*)>1;*/
+

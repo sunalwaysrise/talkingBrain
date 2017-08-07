@@ -1,0 +1,414 @@
+<!doctype html>
+<head>
+<title>游戏设置</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
+<link rel="stylesheet" href="https://www.wenbin.lu/Public/game_manage/libs/animate.css" type="text/css" />
+<link rel="stylesheet" href="https://www.wenbin.lu/Public/game_manage/bower_components/bootstrap/dist/css/bootstrap.min.css" type="text/css" />
+<link rel="stylesheet" href="https://www.wenbin.lu/Public/game_manage/res/css/application.min.css"/>
+<link rel="stylesheet" href="https://www.wenbin.lu/Public/game_manage/res/css/css.css"/>
+<style type="text/css">
+  .img-rounded{width:140px;height:140px;}
+</style>
+</head>
+<body>
+<div class="content">
+    
+    <h1 class="page-title">游戏设置</h1>
+
+    <div class="row">
+      <div class="col-md-12">
+        <section class="widget">
+          <header>
+            <h5>信息设置</h5>
+          </header>
+          <div class="widget-body">
+            <form class="form-horizontal">
+              <fieldset>
+                <div class="form-group">
+                  <label class="col-sm-3 control-label">正确图片</label>
+                  <div class="col-md-4">
+                    <input class="form-control" type="file" id="file_current"/>
+                  </div>
+                  <div class="col-md-4">
+                    <button type="button" class="btn btn-default" onclick="btn_upload0()">上传图片</button>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-3 control-label"></label>
+                  <div class="col-sm-9">
+                    <input type="hidden" id="current_file_name" />
+                    <div class="well images_sort_box" id="current_preview"></div>
+                  </div>
+              </div>
+              </fieldset>
+            </form>
+          </div>
+        </section>
+      </div>
+    </div>
+
+
+    <div class="row" id="STEP">
+      
+    </div>
+
+    <div class="row">
+      <div class="col-md-12"><button class="btn btn-default"  onclick="insert()">增加游戏阶段</button></div>
+    </div>
+
+    <div class="form-actions">
+      <div class="row">
+        <div class="col-sm-offset-4 col-sm-7">
+          <button onclick="save()" type="submit" class="btn btn-primary">保存</button>
+        </div>
+      </div>
+    </div>
+
+</div>
+<div id="loadingToast">
+  <div class="weui-mask_transparent"></div>
+  <div class="weui-toast">
+      <i class="weui-loading weui-icon_toast"></i>
+  </div>
+</div>
+<script>
+  var PUBLIC = '/Public/game_image/',upload_pool={},K=0;
+  function remove_step(i){
+    $('#step_'+i).remove();
+    re_calc();
+  }
+  function insert(o){
+    var h=[];
+    if(!o){
+      o={
+        need_time:"",
+        max_interval:"",
+        min_interval:"",
+        interfere:[],
+        delay:"",
+        odds:""
+      };
+    }else{
+      o.interfere=o.interfere.split(',');
+    }
+    var i=0,len=o.interfere.length;
+    h.push('<div class="col-md-12 game_step" id="step_'+K+'">');
+        h.push('<div class="widget">');
+          h.push('<header>');
+            h.push('<h2>第<span class="step_item"></span>阶段</h2>');
+            h.push('<div class="widget-controls">');
+              h.push('<button onclick="remove_step('+K+')" class="btn btn-primary btn-xs mb-xs">删除</button>');
+            h.push('</div>');
+          h.push('</header>');
+          h.push('<div class="row"><div class="col-sm-12">');
+            h.push('<div class="form-group row">');
+              h.push('<label class="col-sm-3 control-label">游戏时间</label>');
+              h.push('<div class="col-sm-3">');
+                h.push('<div class="input-group">');
+                  h.push('<input class="form-control need_time" value="'+o.need_time+'" type="text"><span class="input-group-addon">分钟</span>');
+                h.push('</div>');
+              h.push('</div>');
+            h.push('</div>');
+            h.push('<div class="form-group row">');
+              h.push('<label class="col-sm-3 control-label">干扰图片</label>');
+              h.push('<div class="col-md-9">');
+                h.push('<div class="well">');
+                  h.push('<div class="form-group">');
+                    h.push('<input type="file" class="form-control" id="files_'+K+'" data="'+K+'" multiple="" />');
+                  h.push('</div>');
+                  h.push('<div class="form-group">');
+                    h.push('<label>进度</label>');
+                    h.push('<div id="files_progress_'+K+'" ></div>');
+                  h.push('</div>');
+                  h.push('<a class="btn btn-default" onclick="submit('+K+')">上传</a>');
+                  h.push('<div class="form-group">');
+                    h.push('<label>预览</label><input class="interfere" type="hidden" id="L_image_'+K+'" value="'+o.interfere.join(',')+'"/>');
+                    h.push('<div class="well images_sort_box" id="files_show_'+K+'" >');
+
+                    for (i;i<len;i++){
+                      h.push('<div class="images_sort"><img src="/Public/game_image/'+o.interfere[i]+'" class="img-rounded"><span onclick="remove_img(this)" class="glyphicon glyphicon-remove"></span></div>');
+                    }
+
+                    h.push('</div></div>');
+                  h.push('<div id="uploading_'+K+'"></div>');
+                h.push('</div>');
+              h.push('</div>');
+            h.push('</div>');
+            h.push('<div class="form-group row">');
+                h.push('<label class="col-sm-3 control-label">干扰项出现概率</label>');
+                h.push('<div class="col-sm-2">');
+                  h.push('<div class="input-group">');
+                    h.push('<input class="form-control odds" value="'+o.odds+'" type="text">');
+                    h.push('<span class="input-group-addon">%</span>');
+                  h.push('</div>');
+                h.push('</div>');
+            h.push('</div>');
+            h.push('<div class="form-group row">');
+              h.push('<label class="col-sm-3 control-label">出现元素的间隔时间</label>');
+              h.push('<div class="col-sm-2">');
+                h.push('<div class="input-group">');
+                  h.push('<input class="form-control min_interval" value="'+o.min_interval+'" type="text">');
+                  h.push('<span class="input-group-addon">秒</span>');
+                h.push('</div>');
+              h.push('</div>');
+              h.push('<div class="col-sm-1 text-align-center">至</div>');
+              h.push('<div class="col-sm-2">');
+                h.push('<div class="input-group">');
+                  h.push('<input class="form-control max_interval" value="'+o.max_interval+'" type="text">');
+                  h.push('<span class="input-group-addon">秒</span>');
+                h.push('</div>');
+              h.push('</div>');
+            h.push('</div>');
+            h.push('<div class="form-group row">');
+              h.push('<label class="col-sm-3 control-label">目标对象停留时间</label>');
+              h.push('<div class="col-sm-2">');
+                h.push('<div class="input-group">');
+                  h.push('<input class="form-control delay" value="'+o.delay+'" type="text">');
+                  h.push('<span class="input-group-addon">秒</span>');
+                h.push('</div>');
+              h.push('</div>');
+            h.push('</div>');
+          h.push('</div></div>');
+        h.push('</div>');
+      h.push('</div>');
+      $('#STEP').append(h.join(''));
+      document.getElementById('files_'+K).addEventListener("change", handleFiles, false);
+      K++;
+      re_calc();
+  }
+  // insert();
+  function re_calc(){
+    $('.step_item').each(function(i,v){
+      $(v).html(i+1);
+    })
+  }
+
+
+  function btn_upload0(){
+    var files=document.querySelector("#file_current").files;
+    if(files.length==0){
+      return alert('请选择图片');
+    }
+    var file=files[0];
+    if (file.type.indexOf("image") == 0) {
+      if (file.size >= 512000) {
+        return alert('您这张"'+ file.name +'"图片大小过大，应小于500k');  
+      }     
+    } else {
+      return alert('文件"' + file.name + '"不是图片。');  
+    }
+    var xhr, formData;
+    xhr = new window.XMLHttpRequest();
+    formData = new window.FormData();
+    xhr.open('POST', '/index/game/upload_product_image');
+    xhr.onload = function () {
+        var r=eval("("+xhr.responseText+")");
+        if(r.flag==1){
+          $('#current_file_name').val(r.msg);
+          $('#current_preview').html('<div class="images_sort"><img src="'+PUBLIC+r.msg+'" class="img-rounded" /><span onclick="remove_img(this)" class="glyphicon glyphicon-remove"></span></div>');
+        }        
+    };
+    formData.append("file", file, file.name);
+    xhr.send(formData);
+  } 
+
+
+  // add();
+  // document.getElementById('files_1').addEventListener("change", handleFiles, false);
+
+  function handleFiles(){
+    var key=$(this).attr('data'),
+      files = this.files,
+      arrFiles = [],
+      i=0,
+      len=files.length,
+      file;
+    for (i;i<len;i++){
+      file = files[i];
+      if (file.type.indexOf("image") == 0) {
+        if (file.size >= 512000) {
+          alert('您这张"'+ file.name +'"图片大小过大，应小于500k');  
+        } else {
+          arrFiles.push(file);  
+        }     
+      } else {
+        alert('文件"' + file.name + '"不是图片。');  
+      }
+    }
+    i=0;
+    len=arrFiles.length;
+    var h=[];
+    for(i;i<len;i++){
+      h.push('<div id="file_upload_progress_box_'+key+'_'+i+'" class="upload_progress "><div class="row">');
+      h.push('<div class="col-md-8">'+arrFiles[i].name+'</div>');
+      h.push('<div class="col-md-4 text-align-right"><a onclick="remove('+key+','+i+')">删除</a></div>');
+      h.push('</div><progress id="file_upload_progress_'+key+'_'+i+'" value="" max="'+arrFiles[i].size+'"></progress></div>');
+    }
+    $('#files_progress_'+key).html(h.join(''));
+    upload_pool['pull_'+key]={
+      files:arrFiles,//文件
+      count:len,//数量
+      tmp:0
+    };
+  }
+
+  function funUploadFile(fileFilter,key) {
+    for (var i = 0, file; file = fileFilter[i]; i++) {
+      ajaxUpload(file,'/index/game/upload_product_image',key,i);
+    }
+  }
+
+  function ajaxUpload(file,url,key,i){
+    var xhr, formData;
+    if(file.active){
+      return ;
+    }
+    file.active = true;
+    xhr = new window.XMLHttpRequest();
+    formData = new window.FormData();
+    xhr.open('POST', url);
+    xhr.upload.onprogress = function(event) {
+      if (!event.lengthComputable) {
+        return;
+      }
+      $('#file_upload_progress_'+key+'_'+i).val(event.loaded);
+    };
+    xhr.upload.onerror=function(e){
+      // console.log("onerror:"+e);
+      upload_pool['pull_'+key].count--;
+    };
+    xhr.onload = function () {
+        //完成
+        upload_pool['pull_'+key].tmp++;
+        var r=eval("("+xhr.responseText+")");
+        if(r.flag==1){
+          var val=$('#L_image_'+key).val();
+          if(val){
+            val=val.split(',');
+          }else{
+            val=[];
+          }
+          val.push(r.msg);
+          $('#L_image_'+key).val(val.join(','));
+          $('#files_show_'+key).append('<div class="images_sort"><img src="'+PUBLIC+r.msg+'" class="img-rounded" /><span onclick="remove_img(this)" class="glyphicon glyphicon-remove"></span></div>');
+        }
+        $('#file_upload_progress_box_'+key+'_'+i).remove();
+
+        //全部完成
+        if(upload_pool['pull_'+key].tmp==upload_pool['pull_'+key].count){
+          $('#files_'+key).val('');
+          $('#uploading_'+key).hide();
+        }
+    };
+    formData.append("file", file, file.name);
+    xhr.send(formData);
+  }
+  function remove_img(e){
+    var i=$(e).parent().index();
+    var o=$(e).parent().parent().prev(),v=o.val();
+    v=v.split(',');
+    v.splice(i,1);
+    o.val(v.join(','));
+    $(e).parent().remove();
+  }
+  function submit(i){
+    funUploadFile(upload_pool['pull_'+i].files,i);
+  }
+  function remove(x,y){
+    $('#file_upload_progress_box_'+x+'_'+y).remove();
+    upload_pool['pull_'+x].files.splice(y,1);
+    upload_pool['pull_'+x].count--;
+  }
+
+  function save(){
+    var h=[],stop=false;
+    $('.game_step').each(function(i,v){
+      var o={
+        need_time:$(v).find('.need_time').val(),
+        interfere:$(v).find('.interfere').val(),
+        odds:$(v).find('.odds').val(),
+        min_interval:$(v).find('.min_interval').val(),
+        max_interval:$(v).find('.max_interval').val(),
+        delay:$(v).find('.delay').val()
+      }
+      if(!o.need_time || isNaN(o.need_time)){
+        stop=true;
+        return alert('第'+(i+1)+'阶段 游戏时间 错误');
+      }
+      if(!o.odds || isNaN(o.odds)){
+        stop=true;
+        return alert('第'+(i+1)+'阶段 游戏概率 错误');
+      }
+      if(!o.interfere){
+        stop=true;
+        return alert('请上传 第'+(i+1)+'阶段干扰图片');
+      }
+      if(!o.min_interval || isNaN(o.min_interval)){
+        stop=true;
+        return alert('第'+(i+1)+'阶段 间隔时间 错误');
+      }
+      if(!o.max_interval || isNaN(o.max_interval)){
+        stop=true;
+        return alert('第'+(i+1)+'阶段 间隔时间 错误');
+      }
+      if (parseFloat(o.min_interval) >= parseFloat(o.max_interval)) {
+        stop=true;
+        return alert('第'+(i+1)+'阶段 间隔时间 错误');
+      }
+      if(!o.delay || isNaN(o.delay)){
+        stop=true;
+        return alert('第'+(i+1)+'阶段 目标对象停留时间 错误');
+      }
+      if (parseFloat(o.delay) >= parseFloat(o.min_interval)) {
+        stop=true;
+        return alert('第'+(i+1)+'阶段 目标对象停留时间不能大于或等于 出现元素的间隔时间最小值');
+      }
+      h.push(o);
+    });
+    if(!stop){
+      if(h.length==0){
+        return alert('至少需要一个阶段');
+      }
+      var params={
+        correct:$('#current_file_name').val(),
+        content:JSON.stringify(h)
+      };
+      if(!params.correct){
+        return alert('选择一张正确图片');
+      }
+      $.ajax({
+        url:"/index/game/save2",
+        data:params,
+        beforeSend:function(){$('#loadingToast').show();},
+        type:"post",
+        success:function(r){
+          $('#loadingToast').hide();
+          alert(r.msg);
+        },
+        error:function(){
+          $('#loadingToast').hide();
+          alert('网络超时');
+        }
+      });
+    }
+  }
+
+  $('#current_file_name').val('{$d.correct}');
+  $('#current_preview').html('<div class="images_sort"><img src="'+PUBLIC+'{$d.correct}" class="img-rounded" /><span onclick="remove_img(this)" class="glyphicon glyphicon-remove"></span></div>');
+  var d='{$d.content}';
+  if(d){
+    d=eval("("+d+")");
+    var i=0,len=d.length;
+    for(i;i<len;i++){
+      insert(d[i]);
+    }
+  }
+  $('#loadingToast').hide();
+
+</script>
+
+</body>
+</html>

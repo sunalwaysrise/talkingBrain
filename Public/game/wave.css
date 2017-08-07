@@ -1,0 +1,376 @@
+.waveBox {
+    width: 660px;
+    height: 220px;
+    padding-top: 150px;
+    position:absolute;
+    display:none;
+}
+
+.waveBox .wave {
+    width: 660px;
+}
+.waveBox .wave .dot {
+    width: 33px;
+    float: left;
+    vertical-align: middle;
+    margin: 16px auto;
+    position: relative;
+}
+.waveBox .wave .dot:before,
+.waveBox .wave .dot:after {
+    content: "";
+    display: inline-block;
+    vertical-align: middle;
+    width: 20px;
+    height: 20px;
+    border-radius:50%;
+    position: absolute;
+    left: -1px;
+}
+.waveBox .wave .dot:nth-child(1):before {
+    background-color: #00ffaf;
+}
+.waveBox .wave .dot:nth-child(2):before {
+    animation: BeforeS 1.9s cubic-bezier(0.42, 0, 0.58, 1) infinite;
+    animation-fill-mode: forwards;
+    animation-delay: -3.42s;
+    background-color: #00ffaf;
+}
+.waveBox .wave .dot:nth-child(2):after {
+    animation: AfterS 1.9s cubic-bezier(0.42, 0, 0.58, 1) infinite;
+    animation-fill-mode: forwards;
+    animation-delay: -3.42s;
+    background-color: #02d2ff;
+}
+.waveBox .wave .dot:nth-child(3):before {
+    animation: Before 1.9s cubic-bezier(0.42, 0, 0.58, 1) infinite;
+    animation-fill-mode: forwards;
+    animation-delay: -5.13s;
+    background-color: #00ffaf;
+}
+.waveBox .wave .dot:nth-child(3):after {
+    animation: After 1.9s cubic-bezier(0.42, 0, 0.58, 1) infinite;
+    animation-fill-mode: forwards;
+    animation-delay: -5.13s;
+    background-color: #02d2ff;
+}
+.waveBox .wave .dot:nth-child(4):before {
+    animation: Before 1.9s cubic-bezier(0.42, 0, 0.58, 1) infinite;
+    animation-fill-mode: forwards;
+    animation-delay: -6.84s;
+    background-color: #00ffaf;
+}
+.waveBox .wave .dot:nth-child(4):after {
+    animation: After 1.9s cubic-bezier(0.42, 0, 0.58, 1) infinite;
+    animation-fill-mode: forwards;
+    animation-delay: -6.84s;
+    background-color: #02d2ff;
+}
+.waveBox .wave .dot:nth-child(5):before {
+    animation: Before 1.9s cubic-bezier(0.42, 0, 0.58, 1) infinite;
+    animation-fill-mode: forwards;
+    animation-delay: -8.55s;
+    background-color: #00ffaf;
+}
+.waveBox .wave .dot:nth-child(5):after {
+    animation: After 1.9s cubic-bezier(0.42, 0, 0.58, 1) infinite;
+    animation-fill-mode: forwards;
+    animation-delay: -8.55s;
+    background-color: #02d2ff;
+}
+.waveBox .wave .dot:nth-child(6):before {
+    animation: Before 1.9s cubic-bezier(0.42, 0, 0.58, 1) infinite;
+    animation-fill-mode: forwards;
+    animation-delay: -10.26s;
+    background-color: #00ffaf;
+}
+.waveBox .wave .dot:nth-child(6):after {
+    animation: After 1.9s cubic-bezier(0.42, 0, 0.58, 1) infinite;
+    animation-fill-mode: forwards;
+    animation-delay: -10.26s;
+    background-color: #02d2ff;
+}
+.waveBox .wave .dot:nth-child(7):before {
+    animation: Before 1.9s cubic-bezier(0.42, 0, 0.58, 1) infinite;
+    animation-fill-mode: forwards;
+    animation-delay: -11.97s;
+    background-color: #00ffaf;
+}
+.waveBox .wave .dot:nth-child(7):after {
+    animation: After 1.9s cubic-bezier(0.42, 0, 0.58, 1) infinite;
+    animation-fill-mode: forwards;
+    animation-delay: -11.97s;
+    background-color: #02d2ff;
+}
+.waveBox .wave .dot:nth-child(8):before {
+    animation: Before 1.9s cubic-bezier(0.42, 0, 0.58, 1) infinite;
+    animation-fill-mode: forwards;
+    animation-delay: -13.68s;
+    background-color: #00ffaf;
+}
+.waveBox .wave .dot:nth-child(8):after {
+    animation: After 1.9s cubic-bezier(0.42, 0, 0.58, 1) infinite;
+    animation-fill-mode: forwards;
+    animation-delay: -13.68s;
+    background-color: #02d2ff;
+}
+.waveBox .wave .dot:nth-child(9):before {
+    animation: Before 1.9s cubic-bezier(0.42, 0, 0.58, 1) infinite;
+    animation-fill-mode: forwards;
+    animation-delay: -15.39s;
+    background-color: #00ffaf;
+}
+.waveBox .wave .dot:nth-child(9):after {
+    animation: After 1.9s cubic-bezier(0.42, 0, 0.58, 1) infinite;
+    animation-fill-mode: forwards;
+    animation-delay: -15.39s;
+    background-color: #02d2ff;
+}
+.waveBox .wave .dot:nth-child(10):before {
+    animation: Before 1.9s cubic-bezier(0.42, 0, 0.58, 1) infinite;
+    animation-fill-mode: forwards;
+    animation-delay: -17.1s;
+    background-color: #00ffaf;
+}
+.waveBox .wave .dot:nth-child(10):after {
+    animation: After 1.9s cubic-bezier(0.42, 0, 0.58, 1) infinite;
+    animation-fill-mode: forwards;
+    animation-delay: -17.1s;
+    background-color: #02d2ff;
+}
+.waveBox .wave .dot:nth-child(11):before {
+    animation: Before 1.9s cubic-bezier(0.42, 0, 0.58, 1) infinite;
+    animation-fill-mode: forwards;
+    animation-delay: -18.81s;
+    background-color: #00ffaf;
+}
+.waveBox .wave .dot:nth-child(11):after {
+    animation: After 1.9s cubic-bezier(0.42, 0, 0.58, 1) infinite;
+    animation-fill-mode: forwards;
+    animation-delay: -18.81s;
+    background-color: #02d2ff;
+}
+.waveBox .wave .dot:nth-child(12):before {
+    animation: Before 1.9s cubic-bezier(0.42, 0, 0.58, 1) infinite;
+    animation-fill-mode: forwards;
+    animation-delay: -20.52s;
+    background-color: #00ffaf;
+}
+.waveBox .wave .dot:nth-child(12):after {
+    animation: After 1.9s cubic-bezier(0.42, 0, 0.58, 1) infinite;
+    animation-fill-mode: forwards;
+    animation-delay: -20.52s;
+    background-color: #02d2ff;
+}
+.waveBox .wave .dot:nth-child(13):before {
+    animation: Before 1.9s cubic-bezier(0.42, 0, 0.58, 1) infinite;
+    animation-fill-mode: forwards;
+    animation-delay: -22.23s;
+    background-color: #00ffaf;
+}
+.waveBox .wave .dot:nth-child(13):after {
+    animation: After 1.9s cubic-bezier(0.42, 0, 0.58, 1) infinite;
+    animation-fill-mode: forwards;
+    animation-delay: -22.23s;
+    background-color: #02d2ff;
+}
+.waveBox .wave .dot:nth-child(14):before {
+    animation: Before 1.9s cubic-bezier(0.42, 0, 0.58, 1) infinite;
+    animation-fill-mode: forwards;
+    animation-delay: -23.94s;
+    background-color: #00ffaf;
+}
+.waveBox .wave .dot:nth-child(14):after {
+    animation: After 1.9s cubic-bezier(0.42, 0, 0.58, 1) infinite;
+    animation-fill-mode: forwards;
+    animation-delay: -23.94s;
+    background-color: #02d2ff;
+}
+.waveBox .wave .dot:nth-child(15):before {
+    animation: Before 1.9s cubic-bezier(0.42, 0, 0.58, 1) infinite;
+    animation-fill-mode: forwards;
+    animation-delay: -25.65s;
+    background-color: #00ffaf;
+}
+.waveBox .wave .dot:nth-child(15):after {
+    animation: After 1.9s cubic-bezier(0.42, 0, 0.58, 1) infinite;
+    animation-fill-mode: forwards;
+    animation-delay: -25.65s;
+    background-color: #02d2ff;
+}
+.waveBox .wave .dot:nth-child(16):before {
+    animation: Before 1.9s cubic-bezier(0.42, 0, 0.58, 1) infinite;
+    animation-fill-mode: forwards;
+    animation-delay: -27.36s;
+    background-color: #00ffaf;
+}
+.waveBox .wave .dot:nth-child(16):after {
+    animation: After 1.9s cubic-bezier(0.42, 0, 0.58, 1) infinite;
+    animation-fill-mode: forwards;
+    animation-delay: -27.36s;
+    background-color: #02d2ff;
+}
+.waveBox .wave .dot:nth-child(17):before {
+    animation: Before 1.9s cubic-bezier(0.42, 0, 0.58, 1) infinite;
+    animation-fill-mode: forwards;
+    animation-delay: -29.07s;
+    background-color: #00ffaf;
+}
+.waveBox .wave .dot:nth-child(17):after {
+    animation: After 1.9s cubic-bezier(0.42, 0, 0.58, 1) infinite;
+    animation-fill-mode: forwards;
+    animation-delay: -29.07s;
+    background-color: #02d2ff;
+}
+.waveBox .wave .dot:nth-child(18):before {
+    animation: Before 1.9s cubic-bezier(0.42, 0, 0.58, 1) infinite;
+    animation-fill-mode: forwards;
+    animation-delay: -30.78s;
+    background-color: #00ffaf;
+}
+.waveBox .wave .dot:nth-child(18):after {
+    animation: After 1.9s cubic-bezier(0.42, 0, 0.58, 1) infinite;
+    animation-fill-mode: forwards;
+    animation-delay: -30.78s;
+    background-color: #02d2ff;
+}
+.waveBox .wave .dot:nth-child(19):before {
+    animation: BeforeS 1.9s cubic-bezier(0.42, 0, 0.58, 1) infinite;
+    animation-fill-mode: forwards;
+    animation-delay: -32.49s;
+    background-color: #00ffaf;
+}
+.waveBox .wave .dot:nth-child(19):after {
+    animation: AfterS 1.9s cubic-bezier(0.42, 0, 0.58, 1) infinite;
+    animation-fill-mode: forwards;
+    animation-delay: -32.49s;
+    background-color: #02d2ff;
+}
+
+.waveBox .wave .dot:nth-child(20):after {
+    background-color: #02d2ff;
+}
+
+
+@-webkit-keyframes Before {
+    0% {top: -60px; z-index: 10;}
+    25% {-weibkit-transform:scale(1.4); z-index: 10;}
+    50% {top: 60px; z-index: 1;}
+    75% {background-color: #00ffaf; -weibkit-transform:scale(0.6); z-index: 1;}
+    100% {top: -60px; z-index: 1;}
+}
+@-moz-keyframes Before {
+    0% {top: -60px; z-index: 10;}
+    25% {transform-scale:(1.4);-webkit-transform:scale(1.4); z-index: 10;}
+    50% {top: 60px; z-index: 1;}
+    75% {background-color: #00ffaf; transform:scale(0.6);-weibkit-transform:scale(0.6) z-index: 1;}
+    100% {top: -60px; z-index: 1;}
+}
+@-ms-keyframes Before {
+    0% {top: -60px; z-index: 10;}
+    25% {transform-scale:(1.4);-webkit-transform:scale(1.4); z-index: 10;}
+    50% {top: 60px; z-index: 1;}
+    75% {background-color: #00ffaf; transform:scale(0.6);-weibkit-transform:scale(0.6) z-index: 1;}
+    100% {top: -60px; z-index: 1;}
+}
+@keyframes Before {
+    0% {top: -60px; z-index: 10;}
+    25% {transform-scale:(1.4);-webkit-transform:scale(1.4); z-index: 10;}
+    50% {top: 60px; z-index: 1;}
+    75% {background-color: #00ffaf; transform:scale(0.6);-weibkit-transform:scale(0.6) z-index: 1;}
+    100% {top: -60px; z-index: 1;}
+}
+
+
+
+@-webkit-keyframes After {
+    0% {top: 60px; z-index: 1;}
+    25% {background-color: #02d2ff; transform:scale(0.6);-weibkit-transform:scale(0.6) z-index: 1;}
+    50% {top: -60px; z-index: 10;}
+    75% {transform-scale:(1.4);-webkit-transform:scale(1.4); z-index: 10;}
+    100% {top: 60px; z-index: 10;}
+}
+@-moz-keyframes After {
+    0% {top: 60px; z-index: 1;}
+    25% {background-color: #02d2ff; transform:scale(0.6);-weibkit-transform:scale(0.6) z-index: 1;}
+    50% {top: -60px; z-index: 10;}
+    75% {transform-scale:(1.4);-webkit-transform:scale(1.4); z-index: 10;}
+    100% {top: 60px; z-index: 10;}
+}
+@-ms-keyframes After {
+    0% {top: 60px; z-index: 1;}
+    25% {background-color: #02d2ff; transform:scale(0.6);-weibkit-transform:scale(0.6) z-index: 1;}
+    50% {top: -60px; z-index: 10;}
+    75% {transform-scale:(1.4);-webkit-transform:scale(1.4); z-index: 10;}
+    100% {top: 60px; z-index: 10;}
+}
+@keyframes After {
+    0% {top: 60px; z-index: 1;}
+    25% {background-color: #02d2ff; transform:scale(0.6);-weibkit-transform:scale(0.6) z-index: 1;}
+    50% {top: -60px; z-index: 10;}
+    75% {transform-scale:(1.4);-webkit-transform:scale(1.4); z-index: 10;}
+    100% {top: 60px; z-index: 10;}
+}
+
+
+
+@-webkit-keyframes BeforeS {
+    0% {top: -40px; z-index: 10;}
+    25% {transform-scale:(1.4);-webkit-transform:scale(1.4); z-index: 10;}
+    50% {top: 40px; z-index: 1;}
+    75% {background-color: #00ffaf; transform:scale(0.6);-weibkit-transform:scale(0.6) z-index: 1;}
+    100% {top: -40px; z-index: 1;}
+}
+@-moz-keyframes BeforeS {
+    0% {top: -40px; z-index: 10;}
+    25% {transform-scale:(1.4);-webkit-transform:scale(1.4); z-index: 10;}
+    50% {top: 40px; z-index: 1;}
+    75% {background-color: #00ffaf; transform:scale(0.6);-weibkit-transform:scale(0.6) z-index: 1;}
+    100% {top: -40px; z-index: 1;}
+}
+@-ms-keyframes BeforeS {
+    0% {top: -40px; z-index: 10;}
+    25% {transform-scale:(1.4);-webkit-transform:scale(1.4); z-index: 10;}
+    50% {top: 40px; z-index: 1;}
+    75% {background-color: #00ffaf; transform:scale(0.6);-weibkit-transform:scale(0.6) z-index: 1;}
+    100% {top: -40px; z-index: 1;}
+}
+@keyframes BeforeS {
+    0% {top: -40px; z-index: 10;}
+    25% {transform-scale:(1.4);-webkit-transform:scale(1.4); z-index: 10;}
+    50% {top: 40px; z-index: 1;}
+    75% {background-color: #00ffaf; transform:scale(0.6);-weibkit-transform:scale(0.6) z-index: 1;}
+    100% {top: -40px; z-index: 1;}
+}
+
+
+
+@-webkit-keyframes AfterS {
+    0% {top: 40px; z-index: 1;}
+    25% {background-color: #02d2ff; transform:scale(0.6);-weibkit-transform:scale(0.6) z-index: 1;}
+    50% {top: -40px; z-index: 10;}
+    75% {transform-scale:(1.4);-webkit-transform:scale(1.4); z-index: 10;}
+    100% {top: 40px; z-index: 10;}
+}
+@-moz-keyframes AfterS {
+    0% {top: 40px; z-index: 1;}
+    25% {background-color: #02d2ff; transform:scale(0.6);-weibkit-transform:scale(0.6) z-index: 1;}
+    50% {top: -40px; z-index: 10;}
+    75% {transform-scale:(1.4);-webkit-transform:scale(1.4); z-index: 10;}
+    100% {top: 40px; z-index: 10;}
+}
+@-ms-keyframes AfterS {
+    0% {top: 40px; z-index: 1;}
+    25% {background-color: #02d2ff; transform:scale(0.6);-weibkit-transform:scale(0.6) z-index: 1;}
+    50% {top: -40px; z-index: 10;}
+    75% {transform-scale:(1.4);-webkit-transform:scale(1.4); z-index: 10;}
+    100% {top: 40px; z-index: 10;}
+}
+@keyframes AfterS {
+    0% {top: 40px; z-index: 1;}
+    25% {background-color: #02d2ff; transform:scale(0.6);-weibkit-transform:scale(0.6) z-index: 1;}
+    50% {top: -40px; z-index: 10;}
+    75% {transform-scale:(1.4);-webkit-transform:scale(1.4); z-index: 10;}
+    100% {top: 40px; z-index: 10;}
+}
+
