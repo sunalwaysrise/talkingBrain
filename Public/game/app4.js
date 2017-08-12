@@ -35,15 +35,15 @@ var app = {
 };
 
 window.onresize = function() {
-  try{
+  try {
     app.init();
-  }catch(e){}
+  } catch (e) {}
 }
 
 var correct_music = document.getElementById('correct_music'),
   incorrect_music = document.getElementById('incorrect_music');
 var play = {
-  click_times:0,
+  click_times: 0,
   flash: "/Public/game/beta2/_flash.gif",
   flash_error: "/Public/game/beta2/flash_error.gif",
   width: 6,
@@ -60,93 +60,99 @@ var play = {
     this.isready = true;
     this.isend = false;
   },
-  CUTDOWN_TIME:3,
-  init:function(){
-    this.CUTDOWN_TIME=3;
+  CUTDOWN_TIME: 3,
+  init: function() {
+    this.CUTDOWN_TIME = 3;
     this._init();
   },
-  _init:function(){
+  _init: function() {
     this.CUTDOWN_TIME--;
-    var a=$("#cutdown-start");
-    if(this.CUTDOWN_TIME >= 0) {
-      a.html(this.CUTDOWN_TIME+1).show().css({
-          "margin-left": -a.width() / 2 + "px",
-          "margin-top": -a.height() / 2 + "px",
-          "font-size": a.height() * 0.7 + "px",
-          "line-height": a.height() + "px"
+    var a = $("#cutdown-start");
+    if (this.CUTDOWN_TIME >= 0) {
+      a.html(this.CUTDOWN_TIME + 1).show().css({
+        "margin-left": -a.width() / 2 + "px",
+        "margin-top": -a.height() / 2 + "px",
+        "font-size": a.height() * 0.7 + "px",
+        "line-height": a.height() + "px"
       }).addClass("cutdownan-imation");
-      setTimeout(function(){
+      setTimeout(function() {
         play._init();
-      },1000);
-    }else{
+      }, 1000);
+    } else {
       a.removeClass("cutdownan-imation").hide().html('');
-      this._init_();//开始游戏
+      this._init_(); //开始游戏
     }
   },
   _init_: function() {
-    if(SOCKET_BOX.INIT.start){
-        // socket.send(JSON.stringify({ command: 11, arg:""}));
-        so.send(JSON.stringify({ command: 11, arg:""}));
-        socket.onmessage=function(e){
-            var o=eval("("+e.data+")");
-            console.log(o);
+    if (SOCKET_BOX.INIT.start) {
+      // socket.send(JSON.stringify({ command: 11, arg:""}));
+      so.send(JSON.stringify({
+        command: 11,
+        arg: ""
+      }));
+      socket.onmessage = function(e) {
+        var o = eval("(" + e.data + ")");
+        console.log(o);
+      }
+      this.isready = false;
+      this.isend = false;
+      $('#outer').removeClass('init');
+      this.log = [];
+      this.correctNumber = 0;
+      this.correctResult = 0;
+      this.incorrectNumber = 0;
+      this.incorrectResult = 0;
+      var k = 0;
+      for (var i = 0; i < this.width; i++) {
+        for (var j = 0; j < this.height; j++) {
+          this._data.push({
+            x: i,
+            y: j,
+            empty: true,
+            index: k
+          });
+          k++;
         }
-        this.isready = false;
-        this.isend = false;
-        $('#outer').removeClass('init');
-        this.log = [];
-        this.correctNumber = 0;
-        this.correctResult = 0;
-        this.incorrectNumber = 0;
-        this.incorrectResult = 0;
-        var k = 0;
-        for (var i = 0; i < this.width; i++) {
-          for (var j = 0; j < this.height; j++) {
-            this._data.push({
-              x: i,
-              y: j,
-              empty: true,
-              index: k
-            });
-            k++;
-          }
-        }
+      }
 
-        document.getElementById('Stage0').style.display = "none";
-        document.getElementById('Stage1').style.display = "block";
-        document.getElementById('Stage2').style.display = "none";
-        $('#count').show();
-        this.next_step();
+      document.getElementById('Stage0').style.display = "none";
+      document.getElementById('Stage1').style.display = "block";
+      document.getElementById('Stage2').style.display = "none";
+      $('#count').show();
+      this.next_step();
 
-    }else{
+    } else {
       // console.log('设备未链接成功')
-        // alert('设备未链接成功');
-        location.reload();
-        // location.hash='list';
+      // alert('设备未链接成功');
+      location.reload();
+      // location.hash='list';
     }
-    
+
   },
   step_time_out_do: null,
   step_time_out: null,
   step_key: 0,
   next_step: function() {
-    if(play.step_key!=0){
+    if (play.step_key != 0) {
       //上一阶段结束
-      so.send(JSON.stringify({ command: 13, arg:"marker2"}));
+      so.send(JSON.stringify({
+        command: 13,
+        arg: "marker2"
+      }));
     }
     if (this.step_key <= Data.length) {
       var step = play.step_key;
       console.log('当前第' + step + '步');
       clearTimeout(play.step_time_out_do);
-      if(Data[step].type=="0"){
+      if (Data[step].type == "0") {
         //播放音乐
         //休息阶段
         $('#rest_please').removeClass('hide');
-        this.paused=true;
-        document.getElementById('rest_music_'+step).play();
-      }else{
+        this.paused = true;
+        document.getElementById('rest_music_' + step).play();
+      } else {
         $('#rest_please').addClass('hide');
-        this.paused=false;
+        this.paused = false;
         play.step_time_out_do = setTimeout(function() {
           play.do();
         }, Data[step].delay * 1000);
@@ -164,7 +170,10 @@ var play = {
           play.next_step();
         }
       }, Data[step].need_time * 60 * 1000);
-      so.send(JSON.stringify({ command: 13, arg:"marker1"}));
+      so.send(JSON.stringify({
+        command: 13,
+        arg: "marker1"
+      }));
     } else {
       //游戏结束
       this.end();
@@ -228,7 +237,7 @@ var play = {
     play.time_out = setTimeout(function() {
       play.do();
     }, this.interval());
-    
+
   },
   setPosition: function(o, pos) { //放到相应位置
     var x = pos.x,
@@ -246,12 +255,12 @@ var play = {
     play.click_times++;
     var result;
     // if (play.is_incorrect) {
-      if (incorrect_music.paused) {
-        incorrect_music.play();
-      } else {
-        incorrect_music.pause();
-        incorrect_music.play();
-      }
+    if (correct_music.paused) {
+      correct_music.play();
+    } else {
+      correct_music.pause();
+      correct_music.play();
+    }
     // } else if (play.is_correct) {
     //   if (correct_music.paused) {
     //     correct_music.play();
@@ -273,21 +282,25 @@ var play = {
   },
   end: function() {
     // socket.send(JSON.stringify({ command: 12, arg:""}));
-    so.send(JSON.stringify({ command: 12, arg:""})); // 全部结束
+    so.send(JSON.stringify({
+      command: 12,
+      arg: ""
+    })); // 全部结束
     this.isend = true;
     //游戏结束
-    var log=JSON.stringify(this.log),params={
-      age:BASE_INFO.age,
-      sex:BASE_INFO.sex,
-      name:BASE_INFO.name,
-      log:log,
-      count:this.click_times
-    };
+    var log = JSON.stringify(this.log),
+      params = {
+        age: BASE_INFO.age,
+        sex: BASE_INFO.sex,
+        name: BASE_INFO.name,
+        log: log,
+        count: this.click_times
+      };
     $.ajax({
-      url:'/index/game/savelog',
-      type:"post",
-      data:params,
-      success:function(){}
+      url: '/index/game/savelog',
+      type: "post",
+      data: params,
+      success: function() {}
     });
     $('#count').hide();
     $("#Stage1 img").remove();
@@ -296,7 +309,7 @@ var play = {
     h.push('<h2>点击<b>' + this.click_times + '</b>次</h2>')
     h.push('<h4>正确目标共出现<b>' + this.correctNumber + '</b>次</h4>');
     h.push('<h5>错误目标共出现<b>' + this.incorrectNumber + '</b>次</h5>');
-    h.push('<a class="again" href="?_time='+new Date().getTime()+'"></a>');
+    h.push('<a class="again" href="?_time=' + new Date().getTime() + '"></a>');
     document.getElementById('Stage2_1').innerHTML = h.join('');
     console.log(this.log);
   }
