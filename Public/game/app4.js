@@ -84,6 +84,7 @@ var play = {
     }
   },
   _init_: function() {
+    this.CUTDOWN_TIME = 3;
     if (SOCKET_BOX.INIT.start) {
       // socket.send(JSON.stringify({ command: 11, arg:""}));
       so.send(JSON.stringify({
@@ -133,6 +134,41 @@ var play = {
   step_time_out: null,
   step_key: 0,
   next_step: function() {
+    if (this.step_key <= Data.length) {
+      if (play.step_key == 0) {
+        //第一阶段不用倒计时
+        this._next_step();
+      } else {
+        if (Data[this.step_key].type == "0") {
+          //休息阶段不用倒计时
+          this._next_step();
+        } else {
+          $('#rest_please').hide();
+          //倒计时
+          this.CUTDOWN_TIME--;
+          var a = $("#cutdown-start");
+          if (this.CUTDOWN_TIME >= 0) {
+            a.html(this.CUTDOWN_TIME + 1).show().css({
+              "margin-left": -a.width() / 2 + "px",
+              "margin-top": -a.height() / 2 + "px",
+              "font-size": a.height() * 0.7 + "px",
+              "line-height": a.height() + "px"
+            }).addClass("cutdownan-imation");
+            setTimeout(function() {
+              play.next_step(); //倒计时
+            }, 1000);
+          } else {
+            a.removeClass("cutdownan-imation").hide().html('');
+            this._next_step(); //开始游戏
+          }
+        }
+      }
+    } else {
+      this.end();
+    }
+  },
+  _next_step: function() {
+    this.CUTDOWN_TIME = 3;
     if (play.step_key != 0) {
       //上一阶段结束
       so.send(JSON.stringify({
